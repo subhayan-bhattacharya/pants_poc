@@ -1,0 +1,44 @@
+# All the things ignored here, should also be ignored in the .gitignore file
+
+# Compiled python modules.
+*.pyc
+
+# Setuptools distribution folder.
+/dist/
+
+# Build
+build/
+
+# Python egg metadata, regenerated from source files by setuptools.
+*.egg-info
+
+# Any virtualenv created with then name venv.
+venv/
+
+# .tox/nox directory and its contents.
+.tox/
+.nox/
+
+# coverage related files.
+.coverage
+coverage.xml
+htmlcov/
+coverage-reports/
+xunit-reports/
+htmlmypy/
+mypy-reports/
+
+# ignore the version.py file.
+version.py
+
+.eggs/
+*.mypy_cache/
+
+# Notebook files
+.ipynb_*
+
+# Secrets
+pip.conf
+
+# IDE files
+.idea/

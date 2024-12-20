@@ -1,0 +1,125 @@
+options:
+  timeout: 600
+
+stages:
+- &pip-compile
+  name: pip-compile
+  runOnFailures: true
+  image: elevait/jenkins-python:master
+  registry: ${HARBOR_URL}
+  registrySecretId: ${HARBOR_SECRET_ID}
+  steps:
+  - tox -e pip-compile
+- &docker-build
+  name: docker-build
+  runOnFailures: true
+  steps:
+  - docker compose build
+
+- &build-and-check
+  name: build & check
+  failFast: false
+  parallel:
+  - name: pre-commit
+    runOnFailures: true
+    image: elevait/jenkins-python:master
+    registry: https://harbor.elevait.io
+    steps:
+    - tox -e pre-commit
+  - name: mypy
+    runOnFailures: true
+    image: elevait/jenkins-python:master
+    registry: https://harbor.elevait.io
+    dependsOn:
+    - pip-compile
+    steps:
+    - tox -e mypy
+  - name: tests
+    runOnFailures: true
+    image: elevait/jenkins-python:master
+    registry: https://harbor.elevait.io
+    registrySecretId: ${HARBOR_SECRET_ID}
+    runArgs: --network=host
+    dependsOn:
+    - pip-compile
+    steps:
+    - tox -e py312
+  - *docker-build
+
+- &docker-publish
+  name: docker-publish
+  registry: https://harbor.elevait.io
+  registrySecretId: ${HARBOR_SECRET_ID}
+  steps:
+  - VERSION=${BRANCH_NAME_SLASH_TO_DASH} docker compose build
+  - VERSION=${BRANCH_NAME_SLASH_TO_DASH} docker compose push
+
+- &pypi-publish
+  name: pypi-publish
+  image: elevait/jenkins-python:master
+  registry: ${HARBOR_URL}
+  registrySecretId: ${HARBOR_SECRET_ID}
+  steps:
+  - hatch build -t sdist
+  - twine upload --skip-existing --repository-url https://pypi.elevait.io --username ${PYPI_USER} --password ${PYPI_PASS} dist/*
+
+- &sonarcloud
+  id: sonarcloud
+  name: sonarcloud
+  dependsOn:
+  - tests
+  args:
+    pythonVersion: 3.12
+
+- &standard-version
+  id: standard-version
+  name: git-release
+
+- &slack-notify-committer-on-failure
+  name: slack-notify
+  id: slack
+  args:
+    committerOnFailure: true
+
+- &cleanup-workspace
+  runOnFailures: true
+  id: cleanup-workspace
+  name: Cleanup
+
+pipelines:
+  default:
+    stages:
+    - name: do nothing
+      steps:
+      - exit 0
+  branches:
+    master:
+      stages:
+      - *pip-compile
+      - *build-and-check
+      - *sonarcloud
+      - failFast: false
+        name: publish & tag
+        parallel:
+        - *docker-publish
+        - *standard-version
+      - *slack-notify-committer-on-failure
+      - *cleanup-workspace
+  pull-request:
+    stages:
+    - *pip-compile
+    - *build-and-check
+    - *sonarcloud
+    - *slack-notify-committer-on-failure
+    - *cleanup-workspace
+  tags:
+    v[0-9]+[.][0-9]+[.][0-9]+:
+      stages:
+      - *docker-build
+      - failFast: false
+        name: publish
+        parallel:
+        - *docker-publish
+        - *pypi-publish
+      - *slack-notify-committer-on-failure
+      - *cleanup-workspace
