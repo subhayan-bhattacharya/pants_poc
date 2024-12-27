@@ -7,8 +7,6 @@ anyio==4.4.0
     #   httpx
     #   starlette
     #   watchfiles
-asgi-correlation-id==4.3.1
-    # via elevait-logging
 beanie==1.28.0
     # via elevait-pants-poc (pyproject.toml)
 certifi==2024.6.2
@@ -23,18 +21,12 @@ click==8.1.7
     #   beanie
     #   typer
     #   uvicorn
-colorlog==6.8.2
-    # via elevait-logging
 dnspython==2.6.1
     # via
     #   email-validator
     #   pymongo
-elevait-logging==1.1.0
-    # via elevait-pants-poc (pyproject.toml)
 email-validator==2.1.1
-    # via
-    #   fastapi
-    #   pydantic
+    # via fastapi
 fastapi==0.111.0
     # via elevait-pants-poc (pyproject.toml)
 fastapi-cli==0.0.4
@@ -71,27 +63,20 @@ orjson==3.10.4
     # via fastapi
 pydantic==2.7.4
     # via
-    #   elevait-pants-poc (pyproject.toml)
     #   beanie
-    #   elevait-logging
     #   fastapi
     #   lazy-model
     #   pydantic-extra-types
-    #   pydantic-settings
 pydantic-core==2.18.4
     # via pydantic
 pydantic-extra-types==2.10.1
-    # via elevait-pants-poc (pyproject.toml)
-pydantic-settings==2.3.3
     # via elevait-pants-poc (pyproject.toml)
 pygments==2.18.0
     # via rich
 pymongo==4.9.2
     # via motor
 python-dotenv==1.0.1
-    # via
-    #   pydantic-settings
-    #   uvicorn
+    # via uvicorn
 python-multipart==0.0.9
     # via fastapi
 pyyaml==6.0.1
@@ -102,17 +87,12 @@ rich==13.7.1
     # via typer
 shellingham==1.5.4
     # via typer
-slack-sdk==3.28.0
-    # via elevait-logging
 sniffio==1.3.1
     # via
     #   anyio
     #   httpx
 starlette==0.37.2
-    # via
-    #   asgi-correlation-id
-    #   elevait-logging
-    #   fastapi
+    # via fastapi
 toml==0.10.2
     # via beanie
 typer==0.12.3

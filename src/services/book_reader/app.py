@@ -1,10 +1,10 @@
 """App for the book reader."""
-import uvicorn
+
 import fastapi
+from utils.common import wrapper
+import uvicorn
 
 from pants_poc.db.books_model import Book
-from utils.common import wrapper
-
 
 APP = fastapi.FastAPI(
     title="Book Creator",
@@ -20,11 +20,9 @@ async def read_books() -> list[Book]:
     return result
 
 
-
-
 def start_service() -> None:
     """Run the service."""
-    uvicorn.run(APP, host='0.0.0.0', port=8000)
+    uvicorn.run(APP, host="0.0.0.0", port=8000)
 
 
 if __name__ == "__main__":

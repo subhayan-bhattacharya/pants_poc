@@ -1,4 +1,5 @@
 """Package for interacting with mongo."""
+
 import os
 from typing import Type
 

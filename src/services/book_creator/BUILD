@@ -1,4 +1,7 @@
-python_sources()
+python_sources(
+    name="app",
+    sources=["app.py"],
+)
 
 docker_image(
     name="docker",
@@ -6,4 +9,9 @@ docker_image(
 
 python_tests(
     name="tests",
+    dependencies=[
+        ":app",
+        "src/pants_poc/db:db",
+        "pyproject.toml:tests"
+    ]
 )

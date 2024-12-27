@@ -1,9 +1,11 @@
 """Common functions to use."""
+
+import contextlib
+
 import beanie
 import fastapi
-import contextlib
-from pants_poc.db import init_db
 
+from pants_poc.db import init_db
 
 
 def wrapper(db_model: beanie.Document) -> callable:
@@ -14,4 +16,5 @@ def wrapper(db_model: beanie.Document) -> callable:
         await init_db(db_model=db_model)
         print("Database initialized...")
         yield
+
     return lifespan

@@ -2,10 +2,10 @@ services:
   db:
     image: bitnami/mongodb
     ports:
-      - target: 27017
-        published: 27017
+    - target: 27017
+      published: 27017
     environment:
-      - ALLOW_EMPTY_PASSWORD=yes
+    - ALLOW_EMPTY_PASSWORD=yes
 
   reader:
     build:
@@ -13,29 +13,29 @@ services:
       dockerfile: src/services/book_reader/Dockerfile
 
       args:
-        - PIP_INDEX_URL=$PIP_INDEX_URL
-        - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
+      - PIP_INDEX_URL=$PIP_INDEX_URL
+      - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
     image: book-reader
     ports:
-      - target: 8000
-        published: 8000
+    - target: 8000
+      published: 8000
     environment:
-      - MONGO_HOST=db
+    - MONGO_HOST=db
     depends_on:
-      - db
+    - db
 
   creator:
     build:
       context: .
       dockerfile: src/services/book_creator/Dockerfile
       args:
-        - PIP_INDEX_URL=$PIP_INDEX_URL
-        - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
+      - PIP_INDEX_URL=$PIP_INDEX_URL
+      - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
     image: book-creator
     ports:
-      - target: 8000
-        published: 9000
+    - target: 8000
+      published: 9000
     environment:
-      - MONGO_HOST=db
+    - MONGO_HOST=db
     depends_on:
-      - db
+    - db

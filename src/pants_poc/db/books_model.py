@@ -1,8 +1,6 @@
 """Mongo models for the book collection."""
 
-from pydantic import BaseModel
-
-from beanie import Document, Indexed
+from beanie import Document
 
 
 class Book(Document):
@@ -21,12 +19,12 @@ class Book(Document):
     class Config:
         schema_extra = {
             "example": {
-              "title": "A book",
-              "authors": ["Someone"],
-              "isbn": "978-00-00-00-00-00",
-              "genres": ["Fiction"],
-              "published_date": "2019-01-10",
-              "summary": "A book"
+                "title": "A book",
+                "authors": ["Someone"],
+                "isbn": "978-00-00-00-00-00",
+                "genres": ["Fiction"],
+                "published_date": "2019-01-10",
+                "summary": "A book",
             }
         }
         name = "products"

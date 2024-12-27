@@ -48,6 +48,12 @@ repos:
   - id: pip-compile
     args: [pyproject.toml, --extra=service, -o, requirements.txt, --python-version, "3.12"]
     files: ^pyproject.toml$
+- repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.2.25
+  hooks:
+  - id: pip-compile
+    args: [pyproject.toml, --extra=tests, -o, test_requirements.txt, --python-version, "3.12"]
+    files: ^pyproject.toml$
 - repo: https://github.com/codespell-project/codespell
   rev: v2.2.4
   hooks:
