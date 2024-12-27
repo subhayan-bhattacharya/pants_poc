@@ -1,0 +1,23 @@
+[GLOBAL]
+pants_version = "2.23.0"
+
+backend_packages = [
+  "pants.backend.python",
+  "pants.backend.python.lint.black",
+  "pants.backend.build_files.fmt.ruff",
+  "pants.backend.docker",
+  "pants.backend.python.lint.autoflake",
+  "pants.backend.python.lint.isort",
+  "pants.backend.python.typecheck.mypy"
+]
+
+pants_ignore_use_gitignore = false
+
+[source]
+root_patterns = [
+  '/src',
+  '/src/services',
+]
+
+[python]
+interpreter_constraints = ['==3.12.*']

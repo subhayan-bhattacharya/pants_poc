@@ -1,23 +1,41 @@
 services:
-  pants_poc:
+  db:
+    image: bitnami/mongodb
+    ports:
+      - target: 27017
+        published: 27017
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes
+
+  reader:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: src/services/book_reader/Dockerfile
+
       args:
-      - PIP_INDEX_URL=$PIP_INDEX_URL
-      - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
-      pull: true
-    image: harbor.elevait.io/elevait/pants_poc:${VERSION:-latest}
-    environment:
-      BASE_CONFIG__HOST: ${BASE_CONFIG__HOST:-0.0.0.0}
-      BASE_CONFIG__PORT: ${BASE_CONFIG__PORT:-8000}
-      BASE_CONFIG__LOGGING_LEVEL: ${BASE_CONFIG__LOGGING_LEVEL:-10}
-      BASE_CONFIG__LOG_TO_FILE: ${BASE_CONFIG__LOG_TO_FILE:-False}
+        - PIP_INDEX_URL=$PIP_INDEX_URL
+        - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
+    image: book-reader
     ports:
-    - published: ${BASE_CONFIG__PORT:-8000}
-      target: ${BASE_CONFIG__PORT:-8000}
-    healthcheck:
-      test: wget --no-verbose --tries=1 --spider http://localhost:${BASE_CONFIG__PORT:-8000}/health || exit 1
-      interval: 10s
-      retries: 2
-      start_period: 5s
+      - target: 8000
+        published: 8000
+    environment:
+      - MONGO_HOST=db
+    depends_on:
+      - db
+
+  creator:
+    build:
+      context: .
+      dockerfile: src/services/book_creator/Dockerfile
+      args:
+        - PIP_INDEX_URL=$PIP_INDEX_URL
+        - PIP_DEFAULT_TIMEOUT=$PIP_DEFAULT_TIMEOUT
+    image: book-creator
+    ports:
+      - target: 8000
+        published: 9000
+    environment:
+      - MONGO_HOST=db
+    depends_on:
+      - db

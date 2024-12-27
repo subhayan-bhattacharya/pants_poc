@@ -1,0 +1,32 @@
+{
+  "template": "git@bitbucket.org:elevait/cookiecutter-ml-project.git",
+  "commit": "848798c8081cdf5ea8548307fe6c8f85818fbd7f",
+  "checkout": null,
+  "context": {
+    "cookiecutter": {
+      "full_name": "soft-pyio",
+      "email": "soft-pyio@elevait.de",
+      "project_name": "pants_poc",
+      "project_short_description": "Short POC on pants",
+      "__project_package_name": "pants_poc",
+      "__project_repo_slug": "pants_poc",
+      "__distribution_package_name": "elevait-pants-poc",
+      "__project_entrypoint_name": "pants-poc",
+      "repo_host": "bitbucket",
+      "build_tool": "tox",
+      "python_version": "3.12",
+      "__python_version_without_dot": "312",
+      "use_jupyter": "no",
+      "use_docker": "yes",
+      "use_sphinx": "no",
+      "git_branching_model": "master",
+      "configure_git_remote": "no",
+      "project_validation": "skip",
+      "_copy_without_render": [
+        ".versionrc"
+      ],
+      "_template": "git@bitbucket.org:elevait/cookiecutter-ml-project.git"
+    }
+  },
+  "directory": null
+}

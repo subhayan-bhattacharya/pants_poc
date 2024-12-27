@@ -42,3 +42,7 @@ pip.conf
 
 # IDE files
 .idea/
+
+# ignore the services dockerfiles when building docker image
+src/services/book_creator/Dockerfile
+src/services/book_reader/Dockerfile

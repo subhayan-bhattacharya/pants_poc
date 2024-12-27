@@ -21,17 +21,17 @@ develop = [
 service = [
   "fastapi>=0.111.0",
   "uvicorn>=0.30.1",
-  "pydantic>=2",
-  "pydantic-settings>=2.1",
   "requests>=2.32.3",
   "types-requests>=2.32",
-  "elevait-logging[asgi]>=1.1.0",
+  "beanie",
+  "pydantic-extra-types",
 ]
 tests = [
   "pytest",
   "pytest-cov",
   "pytest-mock",
   "pytest-docker",
+  "requests"
 ]
 
 [project.scripts]
@@ -57,7 +57,7 @@ skip = [
 version-file = "src/pants_poc/version.py"
 
 [tool.hatch.build.targets.sdist]
-only-include = ["src"]
+only-include = ["src/pants_poc"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/pants_poc"]
