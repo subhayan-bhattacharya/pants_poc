@@ -11,7 +11,6 @@ python_tests(
     name="tests",
     dependencies=[
         ":app",
-        "src/pants_poc/db:db",
         "//:tests"
     ]
 )

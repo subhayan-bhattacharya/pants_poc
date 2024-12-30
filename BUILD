@@ -13,3 +13,8 @@ docker_image(
 python_requirements(
     name="reqs0"
 )
+
+python_requirements(
+    name="reqs1",
+    source="pyproject.toml",
+)
