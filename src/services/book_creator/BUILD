@@ -12,6 +12,6 @@ python_tests(
     dependencies=[
         ":app",
         "src/pants_poc/db:db",
-        "pyproject.toml:tests"
+        "//:tests"
     ]
 )
