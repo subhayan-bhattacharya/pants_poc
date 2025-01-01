@@ -10,8 +10,7 @@ COPY --chown=1000 . .
 
 ARG BUILDKIT_CACHE_PREFIX="pants_poc"
 
-RUN --mount=type=cache,sharing=locked,id=${BUILDKIT_CACHE_PREFIX}-pip-cache,target=~/.cache/pip \
-    --mount=type=bind,source=.git,target=.git                                                   \
+RUN --mount=type=cache,sharing=locked,id=${BUILDKIT_CACHE_PREFIX}-pip-cache,target=~/.cache/pip \                                                 \
     pip install --target /service/site-packages .[service] --constraint requirements.txt
 
 # We use multi-stage build here, see: https://docs.docker.com/build/building/multi-stage/

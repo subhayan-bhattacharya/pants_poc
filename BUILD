@@ -6,10 +6,6 @@ python_requirement(
     ],
 )
 
-docker_image(
-    name="root",
-)
-
 python_requirements(
     name="reqs0"
 )

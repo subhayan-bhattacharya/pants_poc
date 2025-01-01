@@ -4,7 +4,13 @@ python_sources(
 )
 
 docker_image(
-    name="docker",
+    name="book-creator",
+    source="Dockerfile",
+    dependencies=[
+        "src/services/utils:utils",
+        "src/pants_poc/db:db",
+        ":app"
+    ]
 )
 
 python_tests(
