@@ -1,6 +1,6 @@
 python_sources(
     name="app",
-    sources=["./app.py"],
+    sources=["app.py"],
 )
 docker_image(
     name="docker",
