@@ -12,6 +12,7 @@ python_test(
     name="reader_tests",
     dependencies=[
         ":app",
-        "//:tests"
+        "//:tests",
+        "//:reqs1"
     ]
 )
