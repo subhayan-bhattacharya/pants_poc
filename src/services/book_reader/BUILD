@@ -7,8 +7,7 @@ docker_image(
 )
 
 
-python_test(
-    source='./test_service.py',
+python_tests(
     name="reader_tests",
     dependencies=[
         ":app",
