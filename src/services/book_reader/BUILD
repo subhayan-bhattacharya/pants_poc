@@ -1,14 +1,15 @@
 python_sources(
     name="app",
-    sources=["app.py"],
+    sources=["./app.py"],
 )
 docker_image(
     name="docker",
 )
 
 
-python_tests(
-    name="tests",
+python_test(
+    source='./test_service.py',
+    name="reader_tests",
     dependencies=[
         ":app",
         "//:tests"
