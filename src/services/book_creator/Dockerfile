@@ -10,7 +10,8 @@ COPY --chown=1000 . .
 
 ARG BUILDKIT_CACHE_PREFIX="pants_poc"
 
-RUN --mount=type=cache,sharing=locked,id=${BUILDKIT_CACHE_PREFIX}-pip-cache,target=~/.cache/pip \                                                 \
+RUN --mount=type=cache,sharing=locked,id=${BUILDKIT_CACHE_PREFIX}-pip-cache,target=~/.cache/pip \
+#    --mount=type=bind,source=.git,target=.git                                                   \
     pip install --target /service/site-packages .[service] --constraint requirements.txt
 
 # We use multi-stage build here, see: https://docs.docker.com/build/building/multi-stage/
@@ -24,6 +25,6 @@ COPY --from=build /service/site-packages ${TARGET_DIR}
 
 COPY src/services/utils ${TARGET_DIR}/utils
 
-COPY src/services/book_creator .
+COPY src/services/book_creator/app.py app.py
 
 ENTRYPOINT ["python", "app.py"]

@@ -3,13 +3,19 @@ python_sources(
     sources=["app.py"],
 )
 
+files(
+    name="service_files",
+    sources=["**/*.py"]
+)
+
 docker_image(
     name="book-creator",
     source="Dockerfile",
     dependencies=[
-        "src/services/utils:utils",
-        "src/pants_poc/db:db",
-        ":app"
+        "src/services/utils:util_files",
+        ":service_files",
+        "//:root",
+#        "//:git"
     ]
 )
 
